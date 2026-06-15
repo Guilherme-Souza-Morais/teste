@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aluguei - Cama de Solteiro + Colchão</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #eef2ff;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+        header { background: var(--primary); color: #fff; padding: 20px 16px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+        header h1 { font-size: 22px; }
+        header h1 img { height: 56px; object-fit: contain; vertical-align: middle; }
+        header h1 .site-name { color: var(--primary); font-weight: 800; margin-left: 8px; vertical-align: middle; }
+        .search-bar { margin: 16px auto; max-width: 720px; padding: 12px 16px; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .search-bar input { width: 100%; border: none; outline: none; font-size: 14px; color: var(--text); }
+        .content { max-width: 720px; margin: 24px auto; padding: 0 16px; }
+        .card { background: var(--card); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08); }
+        .hero { width: 100%; height: 240px; background-size: cover; background-position: center; }
+        .card-body { padding: 24px; }
+        .section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+        .info-list { list-style: none; display: grid; gap: 10px; margin-bottom: 20px; }
+        .info-list li { color: var(--muted); font-size: 14px; }
+        .location-link { color: var(--primary); text-decoration: none; }
+        .location-link:hover { text-decoration: underline; }
+        .button-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+        .button { display: inline-flex; align-items: center; justify-content: center; padding: 14px 20px; border-radius: 12px; text-decoration: none; color: #fff; font-weight: 700; }
+        .button.primary { background: var(--primary); }
+        .button.secondary { background: #e5e7eb; color: var(--text); }
+        .button.secondary:hover { background: #d1d5db; }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1><img src="Aluguei.jpeg" alt="Aluguei" style="height: 32px; object-fit: contain; margin-right: 10px; vertical-align: middle;">Aluguei</h1>
+        <header>
+            <h1><img src="Aluguei.jpeg" alt="Aluguei" style="margin-right: 8px;"><span class="site-name">Aluguei</span></h1>
+        </header>
+    </div>
+    <main class="content">
+        <div class="card">
+            <div class="hero" style="background-image: url('https://images.unsplash.com/photo-1505693416038-cb2bc7e4cdd0?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="card-body">
+                <div class="section-title">Cama de Solteiro + Colchão</div>
+                <p style="margin-bottom: 16px; color: var(--muted);">Conjunto completo de cama de solteiro com colchão confortável, ideal para quartos compactos e acomodações de estudante.</p>
+                <ul class="info-list">
+                    <li>Preço: <strong>R$ 150,00</strong></li>
+                    <li>Localização: <strong><a class="location-link" href="https://www.google.com/maps/search/?api=1&query=Bairro+Prata+João+Pessoa" target="_blank" rel="noopener">Bairro Prata</a></strong></li>
+                    <li>Negociável</li>
+                </ul>
+                <div class="section-title">Descrição</div>
+                <p style="color: var(--muted);">Cama com estrutura resistente e colchão em bom estado. Pode ser retirada no local ou entregue por frete combinado.</p>
+                <div class="button-row">
+                    <a class="button primary" href="index.html">Voltar</a>
+                    <a class="button secondary" href="#">Entrar em contato</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aluguei - Moradia e Desapego</title>
+    <style>
+        /* Variáveis de Cores e Estilo */
+        :root {
+            --primary-color: #4F46E5;
+            --bg-color: #EEF2FF;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --accent-urgent: #EF4444;
+        }
+
+        /* Tema Escuro */
+        body.dark-mode {
+            --bg-color: #1F2937;
+            --card-bg: #2D3748;
+            --text-main: #F3F4F6;
+            --text-muted: #D1D5DB;
+        }
+
+        /* Reset Básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            height: 100vh;
+            overflow-y: auto;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 16px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        header h1 img {
+            height: 56px;
+            object-fit: contain;
+            vertical-align: middle;
+        }
+
+        header h1 .site-name {
+            color: var(--primary-color);
+            font-weight: 800;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .header-top h1 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .profile-pic {
+            width: 36px;
+            height: 36px;
+            background-color: #C7D2FE;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+            cursor: pointer;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Menu Dropdown do Perfil */
+        .profile-menu {
+            position: absolute;
+            top: 60px;
+            right: 16px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            z-index: 1000;
+            min-width: 200px;
+            display: none;
+        }
+
+        .profile-menu.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-menu-item {
+            padding: 12px 16px;
+            color: var(--text-main);
+            cursor: pointer;
+            border-bottom: 1px solid #E5E7EB;
+            transition: background-color 0.2s;
+        }
+
+        body.dark-mode .profile-menu-item {
+            border-bottom-color: #374151;
+        }
+
+        .profile-menu-item:hover {
+            background-color: #F3F4F6;
+        }
+
+        body.dark-mode .profile-menu-item:hover {
+            background-color: #374151;
+        }
+
+        .profile-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-menu-item.danger {
+            color: #EF4444;
+        }
+
+        /* Botão Sol/Lua */
+        .theme-toggle-btn {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Barra de Busca */
+        .search-bar {
+            background-color: white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        body.dark-mode .search-bar {
+            background-color: #374151;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+            background-color: transparent;
+            color: var(--text-main);
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Seções de Conteúdo */
+        .section-container {
+            padding: 20px 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .see-all {
+            font-size: 12px;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        /* Scroll Horizontal para os Cards */
+        .cards-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 12px;
+            padding-bottom: 10px;
+            /* Esconder scrollbar mantendo funcionalidade */
+            scrollbar-width: none; 
+        }
+        
+        .cards-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Cards Genéricos */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            min-width: 180px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        a.card-link {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a.card-link:hover {
+            text-decoration: none;
+        }
+
+        body.dark-mode .card {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 120px;
+            background-color: #E5E7EB;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 12px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        .card-info {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Tag de Urgência no Desapego */
+        .tag-urgent {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background-color: var(--accent-urgent);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        /* Menu Inferior (Bottom Navigation) */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #E5E7EB;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        body.dark-mode .bottom-nav {
+            background-color: #2D3748;
+            border-top-color: #374151;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background-color: #F3F4F6;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            background-color: currentColor;
+            /* Placeholder para ícones reais */
+            clip-path: circle(50% at 50% 50%); 
+        }
+        
+        /* Padding extra no final para o menu inferior não sobrepor o conteúdo */
+        .spacer {
+            height: 70px;
+        }
+
+        /* Botão Anunciar */
+        .btn-anunciar {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin: 20px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-anunciar:hover {
+            background-color: #4338CA;
+        }
+
+        .btn-anunciar:active {
+            transform: scale(0.98);
+        }
+
+        /* MEDIA QUERIES - Responsividade para diferentes dispositivos */
+        
+        /* Smartphones pequenos (até 320px) */
+        @media (max-width: 320px) {
+            header {
+                padding: 15px 12px;
+            }
+            .header-top h1 {
+                font-size: 16px;
+            }
+            .section-container {
+                padding: 15px 12px;
+            }
+            .section-title {
+                font-size: 16px;
+            }
+            .card {
+                min-width: 150px;
+            }
+        }
+
+        /* Tablets em modo portrait (768px até 1024px) */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            body {
+                max-width: 768px;
+            }
+            .cards-scroll {
+                gap: 16px;
+            }
+            .card {
+                min-width: 200px;
+            }
+            .section-container {
+                padding: 25px 20px;
+            }
+        }
+
+        /* Desktop e telas grandes (1024px+) */
+        @media (min-width: 1024px) {
+            body {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            .cards-scroll {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                overflow: visible;
+                gap: 20px;
+            }
+            .card {
+                min-width: auto;
+            }
+            .section-container {
+                padding: 30px 25px;
+            }
+        }
+
+        /* Modo landscape em smartphones (orientação horizontal) */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                height: auto;
+            }
+            .spacer {
+                height: 40px;
+            }
+            .section-container {
+                padding: 15px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <h1><img src="Aluguei.jpeg" alt="Aluguei" style="margin-right: 8px;"><span class="site-name">Aluguei</span></h1>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="theme-toggle-btn" id="themeToggleBtn">☀️</button>
+                <div style="position: relative;">
+                    <div class="profile-pic" id="profilePic">JP</div>
+                    
+                    <!-- Menu Dropdown do Perfil -->
+                    <div class="profile-menu" id="profileMenu">
+                        <div class="profile-menu-item" id="settingsBtn">⚙️ Configurações de Perfil</div>
+                        <div class="profile-menu-item danger" id="logoutBtn">🚪 Sair</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar quartos, repúblicas ou móveis...">
+        </div>
+    </header>
+
+    <div class="section-container">
+        <div class="section-title">
+            Hospedagem Perto de Você
+            <a href="#" class="see-all">Ver tudo</a>
+        </div>
+        <div class="cards-scroll">
+                <a class="card card-link" href="hospedagem1.html">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=300&q=80'); background-size: cover;"></div>
+                <div class="card-content">
+                    <div class="card-title">Quarto Individual - Bodocongó</div>
+                    <div class="card-price">R$ 450/mês</div>
+                    <div class="card-info">10 min a pé da UEPB • Wi-Fi</div>
+                </div>
+            </a>
+            <a class="card card-link" href="hospedagem2.html">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=300&q=80'); background-size: cover;"></div>
+                <div class="card-content">
+                    <div class="card-title">Apartamento 1 Quarto - Jatobá</div>
+                    <div class="card-price">R$ 800/mês</div>
+                    <div class="card-info">Mobiliado • Próximo à UFCG</div>
+                </div>
+            </a>
+            <a class="card card-link" href="hospedagem3.html">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1502672260266-1c1de2d9200b?auto=format&fit=crop&w=300&q=80'); background-size: cover;"></div>
+                <div class="card-content">
+                    <div class="card-title">Vaga em República Masc.</div>
+                    <div class="card-price">R$ 300/mês</div>
+                    <div class="card-info">Contas inclusas • Pet Friendly</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="section-title">
+            Desapego (Marketplace)
+            <a href="#" class="see-all">Ver tudo</a>
+        </div>
+        <div class="cards-scroll">
+            <a class="card card-link" href="desapego1.html">
+                <div class="tag-urgent">Urgente</div>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&w=300&q=80'); background-size: cover;"></div>
+                <div class="card-content">
+                    <div class="card-title">Escrivaninha MDF Branca</div>
+                    <div class="card-price">R$ 80,00</div>
+                    <div class="card-info">Retirada no Centro • Quase nova</div>
+                </div>
+            </a>
+            <a class="card card-link" href="desapego2.html">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1505693416038-cb2bc7e4cdd0?auto=format&fit=crop&w=300&q=80'); background-size: cover;"></div>
+                <div class="card-content">
+                    <div class="card-title">Cama de Solteiro + Colchão</div>
+                    <div class="card-price">R$ 150,00</div>
+                    <div class="card-info">Bairro Prata • Negociável</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <button class="btn-anunciar">Anunciar</button>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active">
+            <div class="nav-icon"></div>
+            <span>Home</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon" style="border-radius: 4px; clip-path: none;"></div>
+            <span>Imóveis</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div>
+            <span>Desapego</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon" style="clip-path: inset(10% 20% 30% 0);"></div>
+            <span>Perfil</span>
+        </div>
+    </div>
+
+    <script>
+        // ===== SISTEMA DE PERFIL E MENU =====
+        
+        const profilePic = document.getElementById('profilePic');
+        const profileMenu = document.getElementById('profileMenu');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+        // Carregar foto de perfil salva ou usar uma padrão
+        function loadProfilePicture() {
+            const savedPhoto = localStorage.getItem('userProfilePhoto');
+            if (savedPhoto) {
+                profilePic.style.backgroundImage = `url(${savedPhoto})`;
+                profilePic.textContent = '';
+            } else {
+                // Usar uma foto padrão do unsplash
+                profilePic.style.backgroundImage = 'url("https://images.unsplash.com/photo-1633332715463-d30628cbc4c1?auto=format&fit=crop&w=100&q=80")';
+                profilePic.textContent = '';
+            }
+        }
+
+        // Abrir/Fechar menu do perfil
+        profilePic.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileMenu.classList.toggle('show');
+        });
+
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', function() {
+            profileMenu.classList.remove('show');
+        });
+
+        // Configurações de perfil
+        settingsBtn.addEventListener('click', function() {
+            profileMenu.classList.remove('show');
+            alert('Abrindo configurações de perfil...');
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', function() {
+            profileMenu.classList.remove('show');
+            if(confirm('Deseja realmente sair?')) {
+                alert('Você foi desconectado!');
+            }
+        });
+
+        // ===== SISTEMA DE MODO ESCURO =====
+
+        // Carregar modo escuro salvo
+        function loadDarkMode() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                updateThemeButtonIcon();
+            }
+        }
+
+        // Atualizar ícone do botão
+        function updateThemeButtonIcon() {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            themeToggleBtn.textContent = isDarkMode ? '🌙' : '☀️';
+        }
+
+        // Toggle do modo escuro
+        themeToggleBtn.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            updateThemeButtonIcon();
+        });
+
+        // Tornar os botões de navegação clicáveis
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove classe active de todos os itens
+                navItems.forEach(nav => nav.classList.remove('active'));
+                // Adiciona classe active ao item clicado
+                this.classList.add('active');
+                
+                // Mostra uma mensagem do item clicado
+                const itemName = this.querySelector('span').textContent;
+                console.log('Navegando para:', itemName);
+                alert('Você clicou em: ' + itemName);
+            });
+        });
+
+        // Adicionar interatividade ao botão Anunciar
+        const btnAnunciar = document.querySelector('.btn-anunciar');
+        if (btnAnunciar) {
+            btnAnunciar.addEventListener('click', function() {
+                alert('Clicou no botão Anunciar!');
+            });
+        }
+
+        // Inicializar
+        loadProfilePicture();
+        loadDarkMode();
+    </script>
+
+</body>
+</html>
