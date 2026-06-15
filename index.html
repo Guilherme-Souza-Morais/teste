@@ -501,6 +501,12 @@
             padding: 12px 0;
             border-top: 1px solid #E5E7EB;
             z-index: 1000;
+            transition: transform 0.3s ease-out;
+            transform: translateY(0);
+        }
+
+        .bottom-nav.hide-nav {
+            transform: translateY(100%);
         }
 
         body.dark-mode .bottom-nav {
@@ -1151,6 +1157,25 @@
                 });
             });
         }
+
+        // Hide/Show Bottom Nav on Scroll
+        let lastScrollTop = 0;
+        const bottomNav = document.querySelector('.bottom-nav');
+        
+        window.addEventListener('scroll', function() {
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Se scrollar para baixo, esconde a navbar
+            if (currentScroll > lastScrollTop && currentScroll > 100) {
+                bottomNav.classList.add('hide-nav');
+            } 
+            // Se scrollar para cima, mostra a navbar
+            else if (currentScroll < lastScrollTop) {
+                bottomNav.classList.remove('hide-nav');
+            }
+            
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        });
 
         // Inicializar
         loadProfilePicture();
