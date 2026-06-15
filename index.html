@@ -217,6 +217,194 @@
             text-decoration: none;
         }
 
+        /* Botão de Filtro */
+        .filter-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-right: 16px;
+            outline: 0 !important;
+            box-shadow: none !important;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -webkit-focus-ring-color: transparent;
+        }
+
+        .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .filter-btn:focus {
+            outline: 0 !important;
+            box-shadow: none !important;
+            -webkit-focus-ring-color: transparent;
+        }
+
+        .filter-btn:active {
+            outline: 0 !important;
+            box-shadow: none !important;
+        }
+
+        body.dark-mode .filter-btn {
+            border-color: #818CF8;
+            color: #818CF8;
+            background-color: transparent;
+        }
+
+        body.dark-mode .filter-btn:hover {
+            background-color: #818CF8;
+            color: #1F2937;
+        }
+
+        body.dark-mode .filter-btn:focus {
+            outline: 0 !important;
+            box-shadow: none !important;
+            -webkit-focus-ring-color: transparent;
+        }
+
+        body.dark-mode .filter-btn:active {
+            outline: 0 !important;
+            box-shadow: none !important;
+        }
+
+        /* Modal de Filtro */
+        .filter-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            z-index: 2000;
+        }
+
+        .filter-modal.show {
+            display: flex;
+        }
+
+        .filter-modal-content {
+            background-color: var(--card-bg);
+            width: 100%;
+            border-radius: 20px 20px 0 0;
+            padding: 24px 16px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .filter-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        body.dark-mode .filter-modal-header {
+            border-bottom-color: #374151;
+        }
+
+        .filter-modal-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .filter-close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-group-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .filter-option input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        body.dark-mode .filter-actions {
+            border-top-color: #374151;
+        }
+
+        .filter-btn-primary, .filter-btn-secondary {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .filter-btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .filter-btn-primary:hover {
+            background-color: #4338ca;
+        }
+
+        .filter-btn-secondary {
+            background-color: #E5E7EB;
+            color: var(--text-main);
+        }
+
+        body.dark-mode .filter-btn-secondary {
+            background-color: #4B5563;
+        }
+
+        .filter-btn-secondary:hover {
+            background-color: #D1D5DB;
+        }
+
+        body.dark-mode .filter-btn-secondary:hover {
+            background-color: #6B7280;
+        }
+
         /* Scroll Horizontal para os Cards */
         .cards-scroll {
             display: flex;
@@ -476,10 +664,13 @@
     <div class="section-container">
         <div class="section-title">
             Hospedagem Perto de Você
-            <a href="#" class="see-all">Ver tudo</a>
+            <div style="display: flex; align-items: center;">
+                <button class="filter-btn" id="filterBtn-hospedagem">🔽 Filtrar</button>
+                <a href="#" class="see-all">Ver tudo</a>
+            </div>
         </div>
-        <div class="cards-scroll">
-                <a class="card card-link" href="hospedagem1.html">
+        <div class="cards-scroll" id="hospedagem-cards">
+                <a class="card card-link" href="hospedagem1.html" data-price="450" data-type="quarto" data-amenities="wifi">
                 <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=300&q=80'); background-size: cover;"></div>
                 <div class="card-content">
                     <div class="card-title">Quarto Individual - Bodocongó</div>
@@ -487,7 +678,7 @@
                     <div class="card-info">10 min a pé da UEPB • Wi-Fi</div>
                 </div>
             </a>
-            <a class="card card-link" href="hospedagem2.html">
+            <a class="card card-link" href="hospedagem2.html" data-price="800" data-type="apartamento" data-amenities="mobiliado">
                 <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=300&q=80'); background-size: cover;"></div>
                 <div class="card-content">
                     <div class="card-title">Apartamento 1 Quarto - Jatobá</div>
@@ -495,7 +686,7 @@
                     <div class="card-info">Mobiliado • Próximo à UFCG</div>
                 </div>
             </a>
-            <a class="card card-link" href="hospedagem3.html">
+            <a class="card card-link" href="hospedagem3.html" data-price="300" data-type="republica" data-amenities="contas-inclusas,pet-friendly">
                 <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGhvdXNlfGVufDB8fDB8fHww'); background-size: cover;"></div>
                 <div class="card-content">
                     <div class="card-title">Vaga em República Masc.</div>
@@ -506,13 +697,83 @@
         </div>
     </div>
 
+    <!-- Modal de Filtro para Hospedagem -->
+    <div class="filter-modal" id="filterModal-hospedagem">
+        <div class="filter-modal-content">
+            <div class="filter-modal-header">
+                <h3>Filtrar Hospedagens</h3>
+                <button class="filter-close-btn" id="filterClose-hospedagem">✕</button>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-group-title">Faixa de Preço</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-price-300" name="price" value="0-400">
+                    <label for="filter-price-300">Até R$ 400/mês</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-price-500" name="price" value="400-600">
+                    <label for="filter-price-500">R$ 400 - R$ 600/mês</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-price-800" name="price" value="600+">
+                    <label for="filter-price-800">Acima de R$ 600/mês</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-group-title">Tipo de Acomodação</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-type-quarto" name="type" value="quarto">
+                    <label for="filter-type-quarto">Quarto</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-type-apartamento" name="type" value="apartamento">
+                    <label for="filter-type-apartamento">Apartamento</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-type-republica" name="type" value="republica">
+                    <label for="filter-type-republica">República</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-group-title">Benefícios</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-amenity-wifi" name="amenity" value="wifi">
+                    <label for="filter-amenity-wifi">Wi-Fi</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-amenity-pet" name="amenity" value="pet-friendly">
+                    <label for="filter-amenity-pet">Pet Friendly</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-amenity-contas" name="amenity" value="contas-inclusas">
+                    <label for="filter-amenity-contas">Contas Inclusas</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-amenity-mobiliado" name="amenity" value="mobiliado">
+                    <label for="filter-amenity-mobiliado">Mobiliado</label>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button class="filter-btn-secondary" id="filterReset-hospedagem">Limpar Filtros</button>
+                <button class="filter-btn-primary" id="filterApply-hospedagem">Aplicar</button>
+            </div>
+        </div>
+    </div>
+
     <div class="section-container">
         <div class="section-title">
             Desapego (Marketplace)
-            <a href="#" class="see-all">Ver tudo</a>
+            <div style="display: flex; align-items: center;">
+                <button class="filter-btn" id="filterBtn-desapego">🔽 Filtrar</button>
+                <a href="#" class="see-all">Ver tudo</a>
+            </div>
         </div>
-        <div class="cards-scroll">
-            <a class="card card-link" href="desapego1.html">
+        <div class="cards-scroll" id="desapego-cards">
+            <a class="card card-link" href="desapego1.html" data-price="80" data-category="móvel" data-condition="quase-nova">
                 <div class="tag-urgent">Urgente</div>
                 <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&w=300&q=80'); background-size: cover;"></div>
                 <div class="card-content">
@@ -521,7 +782,7 @@
                     <div class="card-info">Retirada no Centro • Quase nova</div>
                 </div>
             </a>
-            <a class="card card-link" href="desapego2.html">
+            <a class="card card-link" href="desapego2.html" data-price="150" data-category="móvel" data-condition="bom">
                 <div class="card-img" style="background-image: url('https://m.media-amazon.com/images/I/71IP6t6BkkL._AC_SX679_.jpg'); background-size: cover;"></div>
                 <div class="card-content">
                     <div class="card-title">Cama de Solteiro + Colchão</div>
@@ -529,6 +790,69 @@
                     <div class="card-info">Bairro Prata • Negociável</div>
                 </div>
             </a>
+        </div>
+    </div>
+
+    <!-- Modal de Filtro para Desapego -->
+    <div class="filter-modal" id="filterModal-desapego">
+        <div class="filter-modal-content">
+            <div class="filter-modal-header">
+                <h3>Filtrar Desapego</h3>
+                <button class="filter-close-btn" id="filterClose-desapego">✕</button>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-group-title">Faixa de Preço</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-des-price-100" name="des-price" value="0-100">
+                    <label for="filter-des-price-100">Até R$ 100</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-des-price-300" name="des-price" value="100-300">
+                    <label for="filter-des-price-300">R$ 100 - R$ 300</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-des-price-300plus" name="des-price" value="300+">
+                    <label for="filter-des-price-300plus">Acima de R$ 300</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-group-title">Categoria</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-des-cat-movel" name="des-category" value="móvel">
+                    <label for="filter-des-cat-movel">Móvel</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-des-cat-eletronico" name="des-category" value="eletrônico">
+                    <label for="filter-des-cat-eletronico">Eletrônico</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-des-cat-livro" name="des-category" value="livro">
+                    <label for="filter-des-cat-livro">Livro</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-group-title">Estado do Item</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-des-cond-novo" name="des-condition" value="novo">
+                    <label for="filter-des-cond-novo">Novo</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-des-cond-quase" name="des-condition" value="quase-nova">
+                    <label for="filter-des-cond-quase">Quase Novo</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-des-cond-bom" name="des-condition" value="bom">
+                    <label for="filter-des-cond-bom">Bom</label>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button class="filter-btn-secondary" id="filterReset-desapego">Limpar Filtros</button>
+                <button class="filter-btn-primary" id="filterApply-desapego">Aplicar</button>
+            </div>
         </div>
     </div>
 
@@ -651,6 +975,180 @@
         if (btnAnunciar) {
             btnAnunciar.addEventListener('click', function() {
                 alert('Clicou no botão Anunciar!');
+            });
+        }
+
+        // ===== SISTEMA DE FILTRO DE HOSPEDAGENS =====
+        const filterBtn = document.getElementById('filterBtn-hospedagem');
+        const filterModal = document.getElementById('filterModal-hospedagem');
+        const filterClose = document.getElementById('filterClose-hospedagem');
+        const filterApply = document.getElementById('filterApply-hospedagem');
+        const filterReset = document.getElementById('filterReset-hospedagem');
+        const hospedagemCards = document.querySelectorAll('#hospedagem-cards .card-link');
+
+        // Abrir modal
+        if (filterBtn) {
+            filterBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                filterModal.classList.add('show');
+            });
+        }
+
+        // Fechar modal
+        if (filterClose) {
+            filterClose.addEventListener('click', function() {
+                filterModal.classList.remove('show');
+            });
+        }
+
+        // Fechar modal ao clicar fora
+        if (filterModal) {
+            filterModal.addEventListener('click', function(e) {
+                if (e.target === filterModal) {
+                    filterModal.classList.remove('show');
+                }
+            });
+        }
+
+        // Aplicar filtros
+        if (filterApply) {
+            filterApply.addEventListener('click', function() {
+                const selectedPrices = Array.from(document.querySelectorAll('input[name="price"]:checked')).map(el => el.value);
+                const selectedTypes = Array.from(document.querySelectorAll('input[name="type"]:checked')).map(el => el.value);
+                const selectedAmenities = Array.from(document.querySelectorAll('input[name="amenity"]:checked')).map(el => el.value);
+
+                hospedagemCards.forEach(card => {
+                    let showCard = true;
+
+                    // Filtro de preço
+                    if (selectedPrices.length > 0) {
+                        const price = parseInt(card.dataset.price);
+                        const matchesPrice = selectedPrices.some(priceRange => {
+                            if (priceRange === '0-400') return price <= 400;
+                            if (priceRange === '400-600') return price >= 400 && price <= 600;
+                            if (priceRange === '600+') return price > 600;
+                            return false;
+                        });
+                        if (!matchesPrice) showCard = false;
+                    }
+
+                    // Filtro de tipo
+                    if (selectedTypes.length > 0 && showCard) {
+                        if (!selectedTypes.includes(card.dataset.type)) {
+                            showCard = false;
+                        }
+                    }
+
+                    // Filtro de amenities
+                    if (selectedAmenities.length > 0 && showCard) {
+                        const cardAmenities = card.dataset.amenities.split(',');
+                        const hasAmenity = selectedAmenities.some(amenity => cardAmenities.includes(amenity));
+                        if (!hasAmenity) showCard = false;
+                    }
+
+                    card.style.display = showCard ? '' : 'none';
+                });
+
+                filterModal.classList.remove('show');
+            });
+        }
+
+        // Limpar filtros
+        if (filterReset) {
+            filterReset.addEventListener('click', function() {
+                document.querySelectorAll('#filterModal-hospedagem input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                hospedagemCards.forEach(card => {
+                    card.style.display = '';
+                });
+            });
+        }
+
+        // ===== SISTEMA DE FILTRO DE DESAPEGO =====
+        const filterBtnDesapego = document.getElementById('filterBtn-desapego');
+        const filterModalDesapego = document.getElementById('filterModal-desapego');
+        const filterCloseDesapego = document.getElementById('filterClose-desapego');
+        const filterApplyDesapego = document.getElementById('filterApply-desapego');
+        const filterResetDesapego = document.getElementById('filterReset-desapego');
+        const desapegoCards = document.querySelectorAll('#desapego-cards .card-link');
+
+        // Abrir modal
+        if (filterBtnDesapego) {
+            filterBtnDesapego.addEventListener('click', function(e) {
+                e.preventDefault();
+                filterModalDesapego.classList.add('show');
+            });
+        }
+
+        // Fechar modal
+        if (filterCloseDesapego) {
+            filterCloseDesapego.addEventListener('click', function() {
+                filterModalDesapego.classList.remove('show');
+            });
+        }
+
+        // Fechar modal ao clicar fora
+        if (filterModalDesapego) {
+            filterModalDesapego.addEventListener('click', function(e) {
+                if (e.target === filterModalDesapego) {
+                    filterModalDesapego.classList.remove('show');
+                }
+            });
+        }
+
+        // Aplicar filtros
+        if (filterApplyDesapego) {
+            filterApplyDesapego.addEventListener('click', function() {
+                const selectedPricesDesapego = Array.from(document.querySelectorAll('input[name="des-price"]:checked')).map(el => el.value);
+                const selectedCategoriesDesapego = Array.from(document.querySelectorAll('input[name="des-category"]:checked')).map(el => el.value);
+                const selectedConditionDesapego = Array.from(document.querySelectorAll('input[name="des-condition"]:checked')).map(el => el.value);
+
+                desapegoCards.forEach(card => {
+                    let showCard = true;
+
+                    // Filtro de preço
+                    if (selectedPricesDesapego.length > 0) {
+                        const price = parseInt(card.dataset.price);
+                        const matchesPriceDesapego = selectedPricesDesapego.some(priceRange => {
+                            if (priceRange === '0-100') return price <= 100;
+                            if (priceRange === '100-300') return price >= 100 && price <= 300;
+                            if (priceRange === '300+') return price > 300;
+                            return false;
+                        });
+                        if (!matchesPriceDesapego) showCard = false;
+                    }
+
+                    // Filtro de categoria
+                    if (selectedCategoriesDesapego.length > 0 && showCard) {
+                        if (!selectedCategoriesDesapego.includes(card.dataset.category)) {
+                            showCard = false;
+                        }
+                    }
+
+                    // Filtro de condição
+                    if (selectedConditionDesapego.length > 0 && showCard) {
+                        if (!selectedConditionDesapego.includes(card.dataset.condition)) {
+                            showCard = false;
+                        }
+                    }
+
+                    card.style.display = showCard ? '' : 'none';
+                });
+
+                filterModalDesapego.classList.remove('show');
+            });
+        }
+
+        // Limpar filtros
+        if (filterResetDesapego) {
+            filterResetDesapego.addEventListener('click', function() {
+                document.querySelectorAll('#filterModal-desapego input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                desapegoCards.forEach(card => {
+                    card.style.display = '';
+                });
             });
         }
 

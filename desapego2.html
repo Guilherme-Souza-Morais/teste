@@ -12,14 +12,25 @@
             --text: #1f2937;
             --muted: #6b7280;
         }
+        body.dark-mode {
+            --bg: #1f2937;
+            --card: #2d3748;
+            --text: #f3f4f6;
+            --muted: #d1d5db;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
         header { background: var(--primary); color: #fff; padding: 20px 16px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
         header h1 { font-size: 22px; }
         header h1 img { height: 56px; object-fit: contain; vertical-align: middle; }
         header h1 .site-name { color: var(--primary); font-weight: 800; margin-left: 8px; vertical-align: middle; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; }
+        .theme-toggle-btn { width: 40px; height: 40px; background-color: rgba(255,255,255,0.2); border: none; border-radius: 8px; color: white; font-size: 18px; cursor: pointer; transition: background-color 0.3s; }
+        .theme-toggle-btn:hover { background-color: rgba(255,255,255,0.3); }
         .search-bar { margin: 16px auto; max-width: 720px; padding: 12px 16px; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        .search-bar input { width: 100%; border: none; outline: none; font-size: 14px; color: var(--text); }
+        .search-bar input { width: 100%; border: none; outline: none; font-size: 14px; background-color: transparent; color: var(--text); }
+        .search-bar input::placeholder { color: var(--muted); }
+        body.dark-mode .search-bar { background: #374151; }
         .content { max-width: 720px; margin: 24px auto; padding: 0 16px; }
         .card { background: var(--card); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08); }
         .hero { width: 100%; height: 240px; background-size: cover; background-position: center; }
@@ -33,12 +44,17 @@
         .button { display: inline-flex; align-items: center; justify-content: center; padding: 14px 20px; border-radius: 12px; text-decoration: none; color: #fff; font-weight: 700; }
         .button.primary { background: var(--primary); }
         .button.secondary { background: #e5e7eb; color: var(--text); }
+        body.dark-mode .button.secondary { background: #4b5563; color: var(--text); }
         .button.secondary:hover { background: #d1d5db; }
+        body.dark-mode .button.secondary:hover { background: #374151; }
         </style>
     </head>
     <body>
         <header>
-            <h1><img src="Aluguei.jpeg" alt="Aluguei" style="margin-right: 8px;"><span class="site-name">Aluguei</span></h1>
+            <div class="header-top">
+                <h1><img src="Aluguei.jpeg" alt="Aluguei" style="margin-right: 8px;"><span class="site-name">Aluguei</span></h1>
+                <button class="theme-toggle-btn" id="themeToggleBtn">☀️</button>
+            </div>
         </header>
     <main class="content">
         <div class="card">
@@ -60,5 +76,32 @@
             </div>
         </div>
     </main>
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const darkModeSetting = localStorage.getItem('darkMode');
+        const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        function updateThemeButtonIcon() {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            themeToggleBtn.textContent = isDarkMode ? '🌙' : '☀️';
+        }
+
+        function loadDarkMode() {
+            const isDarkMode = darkModeSetting === 'true' || (darkModeSetting === null && prefersDarkMode);
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            }
+            updateThemeButtonIcon();
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            updateThemeButtonIcon();
+        });
+
+        loadDarkMode();
+    </script>
 </body>
 </html>
